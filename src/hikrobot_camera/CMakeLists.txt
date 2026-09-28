@@ -31,10 +31,7 @@ else()
   target_link_libraries(camera_node ${MVS_LIBRARY})
   message(STATUS "Found MVS SDK: ${MVS_INCLUDE_DIR}")
   message(STATUS "Found MVS Library: ${MVS_LIBRARY}")
-  
  endif()
-
-
 
 
 install(TARGETS camera_node DESTINATION lib/${PROJECT_NAME})
