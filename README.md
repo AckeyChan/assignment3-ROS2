@@ -60,9 +60,11 @@ colcon build --packages-select hikrobot_camera --cmake-args -DMVS_ROOT=<MVS 安�
     parameter: "DA0734524"   # 相机 IP 或序列号（留空则自动选择第一个设备）
 ```
 
-2. 启动节点：
+2. 启动节点（运行目录任意，但**每个新终端都要先 source 工作空间**，否则会报 `Package 'hikrobot_camera' not found`）：
 
 ```bash
+cd ~/your/workspace/project/assignment3-ROS2
+source install/setup.bash 
 ros2 launch hikrobot_camera camera.launch.py
 # 或指定自己的参数文件
 ros2 launch hikrobot_camera camera.launch.py params_file:=/path/to/camera.yaml
