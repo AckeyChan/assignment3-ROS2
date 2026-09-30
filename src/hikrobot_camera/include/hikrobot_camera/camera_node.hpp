@@ -16,8 +16,11 @@ public:
   private:
   std::string type;
   std::string parameter;
-  int retry;
+  int retry_count;
   int latency;
+  int Rnet;
+  int counter;
+  void* handle;
   MV_CC_DEVICE_INFO* detect_camera(MV_CC_DEVICE_INFO_LIST device_list, std::string _type, std::string _parameter);
 
   // TODO(student): Design the interfaces and resource ownership required by

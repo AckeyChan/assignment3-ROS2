@@ -4,3 +4,7 @@
   ros__parameters:
     
     use_sim_time: false
+    type: "ID"
+    parameter: "DA0734524"
+    retry_count: 3
+    latency: 100
