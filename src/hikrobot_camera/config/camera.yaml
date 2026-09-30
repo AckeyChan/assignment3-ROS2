@@ -1,10 +1,45 @@
-# Only parameters currently supported by the scaffold are listed here.
-# TODO(student): Design and implement camera parameters before adding them.
+# hikrobot_camera 节点参数配置
+#
+# 使用方法：
+#   ros2 launch hikrobot_camera camera.launch.py
+#   ros2 launch hikrobot_camera camera.launch.py params_file:=/path/to/your.yaml
+#
+# 注意：
+#   1. 浮点参数需写成小数（例如 5000.0），写成整数（5000）会因类型不匹配被拒绝；
+#   2. exposure_time / gain / frame_rate 的默认值 -1.0 表示"不修改相机当前设置"。
+
 /hikrobot_camera:
   ros__parameters:
-    
-    use_sim_time: false
-    type: "ID"
+    # ---- 设备选择 ----
+    # type: "IP"=按 IP 选择网口相机；"SN" / "ID"=按序列号选择；""=自动（先序列号后 IP；
+    #       parameter 也为空时选择第一个设备）
+    # parameter: type=IP 时填相机 IP；type=SN / ID 时填序列号；留空则自动选择第一个设备
+    type: "SN"
     parameter: "DA0734524"
-    retry_count: 3
-    latency: 100
+    retry_count: 3           # 连接过程中各步骤的最大重试次数
+    latency: 100             # 连接重试间隔 [ms]
+    reconnect_interval_ms: 1000  # 断线后自动重连间隔 [ms]
+
+    # ---- 图像发布 ----
+    image_topic: "image_raw"     # 发布话题（相对名称，默认解析为 /image_raw）
+    frame_id: "camera"           # 图像消息 header.frame_id
+    use_device_timestamp: false  # true=用相机主机时间戳；false=用 ROS 接收时刻
+    reliable_qos: true           # true=reliable（与 rviz2 默认订阅端兼容）；高帧率可设 false
+    qos_depth: 10                # 图像话题队列深度
+    stats_interval_s: 5.0        # 帧率统计日志间隔 [s]，<=0 表示关闭
+
+    # ---- 相机成像参数（每次连接/重连后自动应用）----
+    # pixel_format 可选值取决于相机型号，例如 "Mono8" / "BayerRG8" / "RGB8Packed"；
+    # 留空表示保持相机当前设置。设置失败时日志会给出设备支持的全部取值。
+    pixel_format: ""
+
+    # 自动模式："Off" / "Once" / "Continuous"
+    exposure_auto: "Off"
+    gain_auto: "Off"
+
+    # 手动曝光 [us]；<0 表示不修改。设置正值时节点会自动将 ExposureAuto 切换为 Off。
+    exposure_time: -1.0
+    # 手动增益 [dB]；<0 表示不修改。设置时节点会自动将 GainAuto 切换为 Off。
+    gain: -1.0
+    # 目标帧率 [fps]；<0 表示不修改。设置时会自动置 AcquisitionFrameRateEnable=true。
+    frame_rate: -1.0

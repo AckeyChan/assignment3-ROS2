@@ -1,4 +1,9 @@
-"""Launch the training scaffold; this does not implement a camera driver."""
+"""Launch the HIKROBOT MVS camera node with its default parameter file.
+
+用法示例：
+    ros2 launch hikrobot_camera camera.launch.py
+    ros2 launch hikrobot_camera camera.launch.py params_file:=/path/to/camera.yaml
+"""
 
 from pathlib import Path
 
