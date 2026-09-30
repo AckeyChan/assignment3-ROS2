@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.8)
 project(hikrobot_camera)
 
 find_package(ament_cmake REQUIRED)
@@ -10,7 +10,7 @@ add_executable(camera_node
 )
 target_compile_features(camera_node PRIVATE cxx_std_17)
 target_include_directories(camera_node PRIVATE include)
-ament_target_dependencies(camera_node rclcpp)
+target_link_libraries(camera_node rclcpp::rclcpp)#111111我用的lyrical所以用的这个代码
 
 
 
